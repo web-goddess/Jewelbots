@@ -33,6 +33,12 @@ In the sketch you can configure:
 
 If you'd like to test it out without waiting 25 minutes, just comment out the variables for the state length and uncomment the ones marked testing. That will change task length to 30 seconds, break to 15 seconds, and long break to one minute.
 
+## Debugging
+
+You can use USB serial output to debug by uncommenting this line: `//#define DEBUG`. Plug in your Jewelbot and open the Serial Monitor. Once you load the sketch, you should see "Setup." in the monitor. (If you get gibberish, try playing with the baud settings. Mine needed to be on 38400 baud.) Press the button to start the loop. Each state should update in the serial monitor as the cycle progresses.
+
+Note: You can't do the long press to reset the loop while charging. This is because the long button press is reserved to put your Jewelbot into Upload Mode while plugged in.
+
 ## License
 
 This project is licensed under the terms of the MIT license.
