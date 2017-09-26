@@ -42,3 +42,7 @@ Note: You can't do the long press to reset the loop while charging. This is beca
 ## License
 
 This project is licensed under the terms of the MIT license.
+
+## Thanks
+
+This project was inspired by [dvberkel](https://github.com/dvberkel/jewelbot-sketches/tree/master/pomodore)'s [Pomodore timer](http://community.jewelbots.com/t/turning-a-jewelbot-into-a-pomodore-timer/306) as well as tacochada's [similar project](http://community.jewelbots.com/t/pomodore-timer/532).
