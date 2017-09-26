@@ -70,16 +70,19 @@ void handle_task(void) {
   //JWB_SERIAL("Task start.\n");
   led.turn_on_all(START_COLOR);
   buzzer.extra_short_buzz();
-  for (int i = 0; i < TASK_TIME; i++) {
+  for (int i = 0; i < TASK_TIME && state == TASK; i++) {
     timer.pause(1000);
     led.turn_off_all();
   }
-  completed_tasks += 1;
-  //JWB_SERIAL_PRINTF("Completed tasks = %u\n", completed_tasks);
-  if (completed_tasks == TASKS_BEFORE_LONG_BREAK) {
-    state = LONG_BREAK;
-  } else {
-      state = BREAK;
+  //handle potential reset interrupts
+  if (state == TASK) {
+    completed_tasks += 1;
+    //JWB_SERIAL_PRINTF("Completed tasks = %u\n", completed_tasks);
+    if (completed_tasks == TASKS_BEFORE_LONG_BREAK) {
+      state = LONG_BREAK;
+    } else {
+        state = BREAK;
+    }
   }
 }
 
@@ -87,11 +90,14 @@ void handle_break(void) {
   //JWB_SERIAL("Short break.\n");
   led.turn_on_all(BREAK_COLOR);
   buzzer.short_buzz();
-  for (int i = 0; i < BREAK_TIME; i++) {
+  for (int i = 0; i < BREAK_TIME && state == BREAK; i++) {
     timer.pause(1000);
     led.turn_off_all();
   }
-  state = TASK;
+  //handle potential reset interrupts
+  if (state == BREAK) {
+    state = TASK;
+  }
 }
 
 void handle_long_break(void) {
@@ -99,12 +105,15 @@ void handle_long_break(void) {
   led.turn_on_all(LONG_BREAK_COLOR);
   buzzer.long_buzz();
   completed_tasks = 0;
-  for (int i = 0; i < LONG_BREAK_TIME; i++) {
+  for (int i = 0; i < LONG_BREAK_TIME && state == LONG_BREAK; i++) {
     timer.pause(1000);
     led.turn_off_all();
   }
-  state = TASK;
-  //JWB_SERIAL("Tasks start over!\n");
+  //handle potential reset interrupts
+  if (state == LONG_BREAK) {
+    state = TASK;
+    //JWB_SERIAL("Tasks start over!\n");
+  }
 }
 
 void button_press(void) {
